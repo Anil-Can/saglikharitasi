@@ -1,0 +1,54 @@
+.query-menu{
+    position: absolute;
+    left: -24.5rem;
+    width: 20rem;
+    height: 100%;
+    background-color: var(--surface-section);
+    color: var(--text-color-secondary);
+    font-family: var(--font-family);
+    transition: .5s;
+    z-index: 5;
+}
+.query-menu.active {
+    left: 4.5rem;
+}
+.query-menu-header{
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    padding: 1.3rem 1rem;
+    display: flex;
+    margin-bottom: 5px;
+}
+.query-menu-header svg {
+    margin-left: auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.query-menu-info {
+    margin-bottom: 5px;
+    padding: 0.4em 0.6em;
+    color: var(--text-color-secondary);
+    font-size: small;
+}
+.query-selection {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 10px;
+}
+.query-selection span {
+    color: var(--text-color);
+    width: 5rem;
+}
+.query-submit {
+    margin-top: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.query-submit input {
+    padding: 0.4em 0.6em;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+    border: none;
+}

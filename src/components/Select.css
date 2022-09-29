@@ -1,0 +1,69 @@
+.form-selection {
+    padding: 0.4em 0.6em;
+    border: 1px solid var(--surface-200);
+    cursor: pointer;
+    display: flex;
+    font-size: 0.8em;
+}
+.form-selection svg {
+    margin-left: auto;
+    transition: .5s;
+}
+.form-selection svg.open {
+    margin-left: auto;
+    transform: rotate(-90deg);
+}
+.form-selection span {
+    white-space: nowrap;
+}
+.form-selection-list{
+    position: fixed;
+    background-color: var(--surface-0);
+    overflow: auto;
+    max-height: 10rem;
+    overflow-x: hidden;
+    display: none;
+    gap: 0.4em;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid var(--surface-300);
+    z-index: 20;
+}
+.form-selection-list::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.form-selection-list::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.form-selection-list::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: var(--focus-ring);
+}
+.form-selection-list.active{
+    display: flex;
+}
+.form-selection-list div {
+    cursor: pointer;
+    padding: 0.1em 0.4em;
+
+}
+.form-selection-list div span {
+    color: var(--text-color-secondary);
+    font-size: small;
+}
+.form-selection-list div:hover {
+    background-color: var(--primary-color);
+
+}
+.form-selection-list div:hover span {
+    color: var(--primary-color-text)
+}

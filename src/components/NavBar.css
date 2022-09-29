@@ -1,0 +1,52 @@
+.navbar{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 4.5rem;
+    left:-4.5rem;
+    background-color: var(--surface-section);
+    color: var(--text-color-secondary);
+    z-index: 10;
+    font-family: var(--font-family);
+    transition: .5s;
+}
+.navbar.active{
+    left: 0;
+}
+.navbar ul {
+    padding: 0;
+    list-style: none;
+    margin-top: 4rem;
+}
+.navbar ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.navbar ul li svg{
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+.navbar ul li span {
+    display: inline-block;
+    max-width: min-content;
+    font-size: small;
+    padding: 0.2rem;
+    color: var(--text-color-secondary);
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+.navbar ul li:hover, .navbar ul li.active {
+    background-color: var(--primary-color);
+}
+
+.navbar ul li:hover svg, .navbar ul li:hover span, .navbar ul li.active svg, .navbar ul li.active span{
+    color: var(--primary-color-text);
+}
