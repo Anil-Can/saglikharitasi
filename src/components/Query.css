@@ -30,6 +30,9 @@
     color: var(--text-color-secondary);
     font-size: small;
 }
+.query-menu-form{
+    margin: 15px;
+}
 .query-selection {
     display: flex;
     gap: 0.5rem;
@@ -51,4 +54,5 @@
     background-color: var(--primary-color);
     color: var(--primary-color-text);
     border: none;
+    cursor: pointer;
 }

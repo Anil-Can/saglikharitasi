@@ -2,7 +2,11 @@ import React,{useEffect, useState} from "react";
 import "./Select.css"
 import { VscTriangleLeft } from "react-icons/vsc";
 export default function Select({options, name, id, width, selectChange}){
-    const index = options.findIndex(e => e.value === sessionStorage.getItem(name));
+    let index = options.findIndex(e => e.value === sessionStorage.getItem(name));
+    if(index === -1 ){
+        index = 0;
+        sessionStorage.setItem(name,options[index].value);
+    }
     const [selection,setSelection] = useState(options[index])
     useEffect(()=> {
         sessionStorage.setItem(name,selection.value);

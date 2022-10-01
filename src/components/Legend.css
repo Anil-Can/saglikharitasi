@@ -1,0 +1,35 @@
+.map-legend{
+    position: absolute;
+    bottom: 2rem;
+    right: 10px;
+    background-color: var(--surface-0);
+    color: var(--text-color-secondary);
+    border: 1px solid var(--surface-500);
+    z-index: 5;
+}
+.map-legend-header {
+    background-color: var(--primary-color);
+    padding: 0.4em 0.6em;
+    color: var(--primary-color-text);
+    border-bottom: 1px solid var(--surface-300);
+}
+.map-legend-header {
+    font-weight: bold;
+}
+.map-legend-body {
+    padding: 0.3em 0.5em;
+    margin-top: 10px;
+
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 5px;
+}
+.legend-item div {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1px solid var(--surface-400);
+}

@@ -24,6 +24,7 @@ export default function Query(){
         },
 
     ]
+    if(mode === 'compare') category.splice(1,1);
     const selectChange = value => {
         setFilterYears(years2.filter(e => e.name > value));
         
@@ -71,7 +72,7 @@ export default function Query(){
                     </div>
                     <div className="query-menu-info">
                         <p>
-                            Bu menüde istedeğiniz yıla ait belirttiğiniz kategoriye ait tematik harita oluşturabilrisiniz.Çapraz sorgu oluşturmak için öncelikle bir normal sorgu yapmanız gerekir.
+                            Bu menüde istediğiniz yıla ait belirttiğiniz kategoriye ait tematik harita oluşturabilirsiniz.Çapraz sorgu oluşturmak için öncelikle bir normal sorgu yapmanız gerekir.
                         </p>
                     </div>
                     <form className="query-menu-form" method="post">
@@ -81,7 +82,7 @@ export default function Query(){
                         </div>
                         <div className="query-selection">
                             <span>Yıl :</span>
-                            <Select options={years} name={"years"} id={"years"} width={"6rem"}/>
+                            <Select options={years} name={"years"} id={"years"} width={"5rem"}/>
                         </div>
 
                         <div className="query-submit">
@@ -99,7 +100,7 @@ export default function Query(){
                     </div>
                     <div className="query-menu-info">
                         <p>
-                            Bu sorguda belirlenen yıl aralığındaki değişimi gösteren bir tematik harita oluşturabilrisiniz.
+                            Bu sorguda belirlenen yıl aralığındaki değişimi gösteren bir tematik harita oluşturabilirsiniz.
                         </p>
                     </div>
                     <form className="query-menu-form" method="post">
@@ -108,9 +109,9 @@ export default function Query(){
                             <Select options={category} name={"category"} id={"category"} width={"11rem"}/>
                         </div>
                         <div className="query-selection">
-                            <span>Yıl :</span>
-                            <Select options={years} name={"years"} id={"years"} width={"6rem"} selectChange={selectChange}/>
-                            <Select options={filterYears} name={"years2"} id={"years2"} width={"6rem"}/>
+                            <span>Aralık :</span>
+                            <Select options={years} name={"years"} id={"years"} width={"5rem"} selectChange={selectChange}/>
+                            <Select options={filterYears} name={"years2"} id={"years2"} width={"5rem"}/>
                         </div>
                         
 
@@ -128,7 +129,7 @@ export default function Query(){
                         <VscChromeClose onClick={close}/>
                         </div>
                     <div className="query-menu-info">
-                        <p>Çapraz sorgu 2 farklı katgeoriye baz olarak bir tematik harita oluşturabilrisiniz.Çapraz sorgu yapmanız için normal sorgu yapmak zorundasınız</p>
+                        <p>Çapraz sorgu 2 farklı katgeoriye baz olarak bir tematik harita oluşturabilirsiniz.Çapraz sorgu yapmanız için normal sorgu yapmak zorundasınız</p>
                     </div>
                 </>
             }

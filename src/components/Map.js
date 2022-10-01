@@ -4,9 +4,10 @@ import {provinces_name,komsular,denizler,goller,country_name} from "../data"
 import { AppContext } from "../context/AppContext";
 import updateGeoJSON from "../functions/updateGeoJSON";
 import classify from "../functions/classify";
+import setLayerPorperty from "../functions/setLayerProperty";
 
 export default function Map() {
-    const {tableName} = useContext(AppContext);
+    const {tableName,setIntervals} = useContext(AppContext);
     const mapStyle = {
         id: "O_SM",
         version: 8,
@@ -58,7 +59,11 @@ export default function Map() {
 
         map.current.on('load', ()=> {
             let provinceGeoJSON = updateGeoJSON(tableName.current);
-            console.log(classify(provinceGeoJSON));
+            const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
+            setIntervals([maxValue,...intervalsLocal]);
+            let colors = setLayerPorperty(intervalsLocal);
+            
+
             map.current.addSource('provinces_name', {
                 'type': 'geojson',
                 'data': provinces_name
@@ -84,6 +89,16 @@ export default function Map() {
                 'type': 'geojson',
                 'data': provinceGeoJSON
             });
+            
+            map.current.addLayer({
+                'id': 'il_layer',
+                'type': 'fill',
+                'source': 'il',
+                'layout': {},
+                'paint': { 
+                    'fill-color': colors,
+                }
+            });
             map.current.addLayer({
                 'id': 'il_sinir_layer',
                 'type': 'line',
@@ -101,7 +116,7 @@ export default function Map() {
                 'source': 'deniz',
                 'layout': {},
                 'paint': { 
-                    'fill-color': 'rgba(5, 93, 235,0.5)',
+                    'fill-color': '#0085bb',
                 }
             });
             map.current.addLayer({
@@ -110,7 +125,7 @@ export default function Map() {
                 'source': 'komsu',
                 'layout': {},
                 'paint': { 
-                    'fill-color': 'rgba(184, 144, 35,0.8)',
+                    'fill-color': '#91cf60',
                 }
             });
             map.current.addLayer({
@@ -124,14 +139,16 @@ export default function Map() {
                     'line-width': 1
                 }
             });
+            
+            
+            
             map.current.addLayer({
-                'id': 'name_layer',
-                'type': 'symbol',
-                'source': 'provinces_name',
-                'layout': {
-                    'text-field': ['get', 'name'],
-                    'text-font': ['Roboto Medium'],
-                    'text-size': 10
+                'id': 'gol_layer',
+                'type': 'fill',
+                'source': 'gol',
+                'layout': {},
+                'paint': { 
+                    'fill-color': '#4BB6EF',
                 }
             });
             map.current.addLayer({
@@ -140,18 +157,28 @@ export default function Map() {
                 'source': 'country_names',
                 'layout': {
                     'text-field': ['get', 'name'],
+                    'text-overlap': 'always',
                     'text-font': ['Roboto Medium'],
-                    'text-size': 12
+                    'text-size': 14
+                },
+                'paint': {
+                    'text-halo-color': 'white',
+                    'text-halo-width': 1.5
                 }
             });
-            
             map.current.addLayer({
-                'id': 'gol_layer',
-                'type': 'fill',
-                'source': 'gol',
-                'layout': {},
-                'paint': { 
-                    'fill-color': 'rgba(23, 234, 245,1.0)',
+                'id': 'name_layer',
+                'type': 'symbol',
+                'source': 'provinces_name',
+                'layout': {
+                    'text-field': ['get', 'name'],
+                    'text-overlap': 'always',
+                    'text-font': ['Roboto Medium'],
+                    'text-size': 14
+                },
+                'paint': {
+                    'text-halo-color': 'white',
+                    'text-halo-width': 1.5
                 }
             });
         })
