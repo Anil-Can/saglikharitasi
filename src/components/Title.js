@@ -18,7 +18,7 @@ export default function Title () {
             case 'compare':
                 text = tableName.current.category === 'hastanesayisi' ? 
                 `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hastane Başına Düşen Kişi Sayısının Değşimi`: 
-                tableName.current.category === 'saglik_personel' ? `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hekim Düşen Kişi Sayısının Değşimi`:
+                tableName.current.category === 'saglik_personel' ? `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hekim Başına Düşen Kişi Sayısının Değşimi`:
                 `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hastane Yatak Başına Düşen Kişi Sayısının Değşimi`
                 break;
             case 'cross':

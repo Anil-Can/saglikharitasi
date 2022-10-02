@@ -1,3 +1,4 @@
+@import '~maplibre-gl/dist/maplibre-gl.css';
 body{
   overflow: hidden;
   margin: 0;

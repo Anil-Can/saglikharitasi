@@ -1,0 +1,52 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+.mapboxgl-popup-content, .maplibregl-popup-content{
+    padding: 0 !important;
+}
+.map-popup {
+    font-family: 'Lora', sans-serif;
+}
+
+.map-popup-header {
+    background-color: var(--primary-color);
+    color:var(--primary-color-text);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    padding: 0.2em 0.4em;
+    align-items: center;
+}
+
+.map-popup-header button {
+    background-color: var(--primary-color);
+    font-weight: 600;
+    color:var(--primary-color-text);
+    font-weight: 700;
+    padding: 0.2em 0.3em;
+    border: none;
+    margin-left: auto;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.map-popup-body{
+    display: table;
+}
+.map-popup-body div {
+    display: table-row;
+}
+.map-popup-body div span {
+    display: table-cell;
+    margin: 5px;
+    padding: 0.2em 0.6em;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--surface-500);
+    border-right: 1px solid var(--surface-500);
+}
+.map-popup-attribute span:first-child{
+    background-color: #05e542a3;
+    font-weight: 700;
+}
+.map-popup-attribute span:not(:first-child){
+    background-color: #1797d399;
+    font-weight: 500;
+}

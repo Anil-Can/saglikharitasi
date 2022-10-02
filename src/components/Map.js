@@ -1,10 +1,12 @@
 import React,{useState,useEffect,useRef, useContext} from "react";
+import ReactDOM from "react-dom";
 import maplibregl from 'maplibre-gl';
 import {provinces_name,komsular,denizler,goller,country_name} from "../data"
 import { AppContext } from "../context/AppContext";
 import updateGeoJSON from "../functions/updateGeoJSON";
 import classify from "../functions/classify";
 import setLayerPorperty from "../functions/setLayerProperty";
+import Popup from "./Popup";
 
 export default function Map() {
     const {tableName,setIntervals} = useContext(AppContext);
@@ -36,6 +38,7 @@ export default function Map() {
     }
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const popupRef = useRef(new maplibregl.Popup({closeButton:false,closeOnClick:false}));
     const bounds = [
         [ 22.84991,  33.921258], // Southwest coordinates
         [ 46.48194,  47.046743] // Northeast coordinates
@@ -56,7 +59,7 @@ export default function Map() {
             doubleClickZoom: false,
             touchPitch: false,
         });
-
+        var hoveredStateId = null;
         map.current.on('load', ()=> {
             let provinceGeoJSON = updateGeoJSON(tableName.current);
             const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
@@ -97,6 +100,12 @@ export default function Map() {
                 'layout': {},
                 'paint': { 
                     'fill-color': colors,
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        1.0,
+                        0.8
+                    ]
                 }
             });
             map.current.addLayer({
@@ -181,7 +190,47 @@ export default function Map() {
                     'text-halo-width': 1.5
                 }
             });
+        });
+        map.current.on('click', 'il_layer', e => {
+            if(e.features.length > 0)
+            {
+                let popupHeader = document.querySelector('.map-popup-header');
+                if( popupHeader !== null) popupHeader.querySelector('button').click();
+                let properties = e.features[0].properties;
+                const popupNode = document.createElement("div");
+                popupRef.current
+                .setLngLat(e.lngLat)
+                .setDOMContent(popupNode)
+                .addTo(map.current)
+                ReactDOM.render(
+                    <Popup properties={properties} tableName={tableName.current} popup={popupRef.current}/>,
+                    popupNode
+                );
+                
+            }
         })
+        map.current.on('mousemove', 'il_layer', function (e) {
+            if (e.features.length > 0) {
+                if (hoveredStateId) {
+                    map.current.setFeatureState(
+                        { source: 'il', id: hoveredStateId },
+                        { hover: false }
+                    );
+                }
+                hoveredStateId = e.features[0].id;
+                map.current.setFeatureState(
+                    { source: 'il', id: hoveredStateId },
+                    { hover: true }
+                );
+            }
+        });
+        map.current.on('mouseenter', 'il_layer', function () {
+            map.current.getCanvas().style.cursor = 'pointer';
+        });
+            
+        map.current.on('mouseleave', 'il_layer', function () {
+            map.current.getCanvas().style.cursor = 'default';
+        });
     
     });
     return (

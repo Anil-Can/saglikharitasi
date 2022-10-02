@@ -1,12 +1,12 @@
 
 import React, { useRef, useState} from "react";
-import Hambuerger from "./components/Hamburger";
+import Hamburger from "./components/Hamburger";
 import Legend from "./components/Legend";
 import Map from "./components/Map";
 import NavBar from "./components/NavBar";
 import Query from "./components/Query";
 import Title from "./components/Title";
-import { AppContext } from "./context/AppContext";
+import { AppContext } from "./context/AppContext"
 
 export default function App() {
     // Kategori isimleri yıl ve sorgu tipini çerez olarak getirilir
@@ -29,7 +29,7 @@ export default function App() {
                 <Legend/>
                 <NavBar/>
                 <Query/>
-                <Hambuerger/>
+                <Hamburger/>
                 <Map/>
             </AppContext.Provider>
         </React.StrictMode>

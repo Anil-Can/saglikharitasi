@@ -12,7 +12,6 @@ export default function Legend (){
         "#fecc5c",
         "#ffffb2",
     ];
-    console.log(tableName);
     return(
         <div className="map-legend">
             <div className="map-legend-header">

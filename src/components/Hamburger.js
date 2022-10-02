@@ -2,7 +2,7 @@ import React,{ useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AppContext } from "../context/AppContext";
 import "./Hamburger.css"
-export default function Hambuerger () {
+export default function Hamburger () {
     const { mode, setMode } = useContext(AppContext);
     const click = () => {
         
