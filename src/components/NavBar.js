@@ -1,5 +1,5 @@
 import React ,{useContext} from "react";
-import { VscGitCompare,VscSearch,VscTypeHierarchySub } from "react-icons/vsc";
+import { VscGitCompare,VscSearch,VscTypeHierarchySub,VscActivateBreakpoints } from "react-icons/vsc";
 import { AppContext } from "../context/AppContext";
 import "./NavBar.css"
 export default function NavBar(){
@@ -12,14 +12,22 @@ export default function NavBar(){
 
     const click = e => {
         let target = e.target.localName === 'span' || e.target.localName === 'svg' ? e.target.parentNode : e.target.localName === 'path' ? e.target.parentNode.parentNode: e.target;
-        let target2 = document.querySelector(".navbar").querySelector('li.active')
-        if(target2 !== null ) clear(target2);
-        if(target2 !== target){
-            target.classList.toggle('active');
-            document.querySelector('.query-menu').classList.toggle('active');
-            sessionStorage.setItem('mode',target.id);
-            setMode(target.id);
-        }    
+        if(target.id === 'cluster')
+        {
+            sessionStorage.setItem("mode","cluster");
+            location.reload();
+        }
+        else
+        {
+            let target2 = document.querySelector(".navbar").querySelector('li.active')
+            if(target2 !== null ) clear(target2);
+            if(target2 !== target){
+                target.classList.toggle('active');
+                document.querySelector('.query-menu').classList.toggle('active');
+                setMode(target.id);
+            }    
+        }
+        
     }
     return(
         <nav className="navbar">
@@ -35,6 +43,10 @@ export default function NavBar(){
                 <li id="cross" onClick={e => click(e)}>
                     <VscTypeHierarchySub/>
                     <span>Çapraz Sorgu</span>
+                </li>
+                <li id="cluster" onClick={e => click(e)}>
+                    <VscActivateBreakpoints/>
+                    <span>Cluster</span>
                 </li>
             </ul>
         </nav>

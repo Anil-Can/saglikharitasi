@@ -1,16 +1,8 @@
-import React,{useEffect, useState} from "react";
+import React,{ useState } from "react";
 import "./Select.css"
 import { VscTriangleLeft } from "react-icons/vsc";
 export default function Select({options, name, id, width, selectChange}){
-    let index = options.findIndex(e => e.value === sessionStorage.getItem(name));
-    if(index === -1 ){
-        index = 0;
-        sessionStorage.setItem(name,options[index].value);
-    }
-    const [selection,setSelection] = useState(options[index])
-    useEffect(()=> {
-        sessionStorage.setItem(name,selection.value);
-    })
+    const [selection,setSelection] = useState(options[0]);
     const toggle = e => {
         let target = e.target.localName !== 'div' ? e.target.parentNode:e.target;
         target.children[1].classList.toggle('open');

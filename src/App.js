@@ -25,8 +25,11 @@ export default function App() {
     return(
         <React.StrictMode>
             <AppContext.Provider value={{mode,setMode,intervals,setIntervals,tableName}}>
-                <Title/>
-                <Legend/>
+                {tableName.current.mode !== 'cluster' && 
+                <>
+                    <Title/>
+                    <Legend/>
+                </>}
                 <NavBar/>
                 <Query/>
                 <Hamburger/>

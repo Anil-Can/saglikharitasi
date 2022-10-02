@@ -51,145 +51,149 @@ export default function Map() {
         if(map.current) return;
         map.current = new maplibregl.Map({
             container: mapContainer.current,
-            style:currentStyle,
+            style:tableName.current.mode === 'cluster' ? mapStyle:currentStyle,
             center: center,
             zoom: zoom,
-            maxBounds: bounds,
+            ...(tableName.current.mode !== 'cluster' && {maxBounds: bounds}),
             dragRotate: false,
             doubleClickZoom: false,
             touchPitch: false,
         });
         var hoveredStateId = null;
         map.current.on('load', ()=> {
-            let provinceGeoJSON = updateGeoJSON(tableName.current);
-            const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
-            setIntervals([maxValue,...intervalsLocal]);
-            let colors = setLayerPorperty(intervalsLocal);
-            
+            if(tableName.current.mode !== 'cluster')
+            {
+                let provinceGeoJSON = updateGeoJSON(tableName.current);
+                const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
+                setIntervals([maxValue,...intervalsLocal]);
+                let colors = setLayerPorperty(intervalsLocal);
+                
 
-            map.current.addSource('provinces_name', {
-                'type': 'geojson',
-                'data': provinces_name
-            });
-            map.current.addSource('country_names', {
-                'type': 'geojson',
-                'data': country_name
-            });
-            map.current.addSource('gol', {
-                'type': 'geojson',
-                'data': goller
-            });
-            map.current.addSource('deniz', {
-                'type': 'geojson',
-                'data': denizler
-            });
-    
-            map.current.addSource('komsu', {
-                'type': 'geojson',
-                'data': komsular
-            });
-            map.current.addSource('il', {
-                'type': 'geojson',
-                'data': provinceGeoJSON
-            });
+                map.current.addSource('provinces_name', {
+                    'type': 'geojson',
+                    'data': provinces_name
+                });
+                map.current.addSource('country_names', {
+                    'type': 'geojson',
+                    'data': country_name
+                });
+                map.current.addSource('gol', {
+                    'type': 'geojson',
+                    'data': goller
+                });
+                map.current.addSource('deniz', {
+                    'type': 'geojson',
+                    'data': denizler
+                });
+        
+                map.current.addSource('komsu', {
+                    'type': 'geojson',
+                    'data': komsular
+                });
+                map.current.addSource('il', {
+                    'type': 'geojson',
+                    'data': provinceGeoJSON
+                });
+                
+                map.current.addLayer({
+                    'id': 'il_layer',
+                    'type': 'fill',
+                    'source': 'il',
+                    'layout': {},
+                    'paint': { 
+                        'fill-color': colors,
+                        'fill-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1.0,
+                            0.8
+                        ]
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'il_sinir_layer',
+                    'type': 'line',
+                    'source': 'il',
+                    'layout': {},
+                    'paint': 
+                    {
+                        'line-color': 'rgba(0,0,0,1.0)',
+                        'line-width': 1
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'deniz_layer',
+                    'type': 'fill',
+                    'source': 'deniz',
+                    'layout': {},
+                    'paint': { 
+                        'fill-color': '#0085bb',
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'komsu_layer',
+                    'type': 'fill',
+                    'source': 'komsu',
+                    'layout': {},
+                    'paint': { 
+                        'fill-color': '#91cf60',
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'komsu_sinir_layer',
+                    'type': 'line',
+                    'source': 'komsu',
+                    'layout': {},
+                    'paint': 
+                    {
+                        'line-color': 'rgb(0,0,0)',
+                        'line-width': 1
+                    }
+                });
+                
+                
+                
+                map.current.addLayer({
+                    'id': 'gol_layer',
+                    'type': 'fill',
+                    'source': 'gol',
+                    'layout': {},
+                    'paint': { 
+                        'fill-color': '#4BB6EF',
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'country_name_layer',
+                    'type': 'symbol',
+                    'source': 'country_names',
+                    'layout': {
+                        'text-field': ['get', 'name'],
+                        'text-overlap': 'always',
+                        'text-font': ['Roboto Medium'],
+                        'text-size': 14
+                    },
+                    'paint': {
+                        'text-halo-color': 'white',
+                        'text-halo-width': 1.5
+                    }
+                });
+                map.current.addLayer({
+                    'id': 'name_layer',
+                    'type': 'symbol',
+                    'source': 'provinces_name',
+                    'layout': {
+                        'text-field': ['get', 'name'],
+                        'text-overlap': 'always',
+                        'text-font': ['Roboto Medium'],
+                        'text-size': 14
+                    },
+                    'paint': {
+                        'text-halo-color': 'white',
+                        'text-halo-width': 1.5
+                    }
+                });
+            }
             
-            map.current.addLayer({
-                'id': 'il_layer',
-                'type': 'fill',
-                'source': 'il',
-                'layout': {},
-                'paint': { 
-                    'fill-color': colors,
-                    'fill-opacity': [
-                        'case',
-                        ['boolean', ['feature-state', 'hover'], false],
-                        1.0,
-                        0.8
-                    ]
-                }
-            });
-            map.current.addLayer({
-                'id': 'il_sinir_layer',
-                'type': 'line',
-                'source': 'il',
-                'layout': {},
-                'paint': 
-                {
-                    'line-color': 'rgba(0,0,0,1.0)',
-                    'line-width': 1
-                }
-            });
-            map.current.addLayer({
-                'id': 'deniz_layer',
-                'type': 'fill',
-                'source': 'deniz',
-                'layout': {},
-                'paint': { 
-                    'fill-color': '#0085bb',
-                }
-            });
-            map.current.addLayer({
-                'id': 'komsu_layer',
-                'type': 'fill',
-                'source': 'komsu',
-                'layout': {},
-                'paint': { 
-                    'fill-color': '#91cf60',
-                }
-            });
-            map.current.addLayer({
-                'id': 'komsu_sinir_layer',
-                'type': 'line',
-                'source': 'komsu',
-                'layout': {},
-                'paint': 
-                {
-                    'line-color': 'rgb(0,0,0)',
-                    'line-width': 1
-                }
-            });
-            
-            
-            
-            map.current.addLayer({
-                'id': 'gol_layer',
-                'type': 'fill',
-                'source': 'gol',
-                'layout': {},
-                'paint': { 
-                    'fill-color': '#4BB6EF',
-                }
-            });
-            map.current.addLayer({
-                'id': 'country_name_layer',
-                'type': 'symbol',
-                'source': 'country_names',
-                'layout': {
-                    'text-field': ['get', 'name'],
-                    'text-overlap': 'always',
-                    'text-font': ['Roboto Medium'],
-                    'text-size': 14
-                },
-                'paint': {
-                    'text-halo-color': 'white',
-                    'text-halo-width': 1.5
-                }
-            });
-            map.current.addLayer({
-                'id': 'name_layer',
-                'type': 'symbol',
-                'source': 'provinces_name',
-                'layout': {
-                    'text-field': ['get', 'name'],
-                    'text-overlap': 'always',
-                    'text-font': ['Roboto Medium'],
-                    'text-size': 14
-                },
-                'paint': {
-                    'text-halo-color': 'white',
-                    'text-halo-width': 1.5
-                }
-            });
         });
         map.current.on('click', 'il_layer', e => {
             if(e.features.length > 0)

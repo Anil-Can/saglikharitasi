@@ -24,7 +24,7 @@ export default function Query(){
         },
 
     ]
-    if(mode === 'compare') category.splice(1,1);
+    
     const selectChange = value => {
         setFilterYears(years2.filter(e => e.name > value));
         
@@ -40,6 +40,10 @@ export default function Query(){
         {name:2009,value:"2009"},{name:2010,value:"2010"},{name:2011,value:"2011"},{name:2012,value:"2012"},{name:2013,value:"2013"},{name:2014,value:"2014"},
         {name:2015,value:"2015"},{name:2016,value:"2016"},{name:2017,value:"2017"},{name:2018,value:"2018"},{name:2019,value:"2019"},
     ]
+    if(mode === 'compare'){
+        category.splice(1,1);
+        years.pop();
+    } 
     const [filterYears ,setFilterYears] = useState(years2);
     useEffect( ()=> {
         let yearsInput = document.querySelector('#years');
@@ -61,6 +65,24 @@ export default function Query(){
         setMode(null);
         document.querySelector('.query-menu').classList.remove('active');
         document.querySelector('.navbar').querySelector('li.active').classList.remove('active');
+    }
+    const submit = () => {
+        console.log("Test");
+        let categoryInput = document.querySelector('#category')
+        let yearsInput = document.querySelector('#years');
+        let years2Input = document.querySelector('#years2');
+        sessionStorage.setItem("mode",mode);
+        if( years2Input !== null)
+        {
+            sessionStorage.setItem("years2",years2Input.value);
+            sessionStorage.setItem("years",yearsInput.value);
+            sessionStorage.setItem("category",categoryInput.value);
+        }
+        else
+        {
+            sessionStorage.setItem("years",yearsInput.value);
+            sessionStorage.setItem("category",categoryInput.value);
+        }
     }
     return(
         <div className="query-menu">
@@ -86,7 +108,7 @@ export default function Query(){
                         </div>
 
                         <div className="query-submit">
-                            <input type="submit" value="Haritayı Aç"/>
+                            <input type="submit" value="Haritayı Aç" onClick={submit}/>
                         </div>
                         
                     </form>
@@ -116,7 +138,7 @@ export default function Query(){
                         
 
                         <div className="query-submit">
-                            <input type="submit" value="Haritayı Aç"/>
+                            <input type="submit" value="Haritayı Aç" onClick={submit}/>
                         </div>
                         
                     </form>
