@@ -50,3 +50,22 @@
 .navbar ul li:hover svg, .navbar ul li:hover span, .navbar ul li.active svg, .navbar ul li.active span{
     color: var(--primary-color-text);
 }
+
+@media only screen and (max-width: 600px) {
+    .navbar {
+        width: 3rem;
+        left:-3rem;
+    }
+    .navbar ul {
+        margin-top: 3rem;
+    }
+    .navbar ul li svg {
+        font-size: 1.1rem;
+    }
+    .navbar ul li span {
+        font-size: 0.7rem;
+    }
+    .navbar ul li {
+        padding: 0.2rem;
+    }
+}

@@ -56,3 +56,41 @@
     border: none;
     cursor: pointer;
 }
+@media only screen and (max-width: 600px)
+{
+    .query-menu
+    {
+        left: -15rem;
+        width: 12rem;
+    }
+    .query-menu.active
+    {
+        left: 3rem;
+    }
+    .query-menu-header
+    {
+        padding: 0.8rem 0.5rem;
+    }
+    .query-menu-header svg
+    {
+        font-size: 1.1rem;
+    }
+    .query-menu-info
+    {
+        padding:0.2rem 0.3rem;
+        font-size: 0.7rem;
+    }
+    .query-menu-form
+    {
+        margin: 10px;
+    }
+    .query-selection span{
+        width: 3rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+    .query-submit input
+    {
+        padding: 0.4rem;
+    }
+}

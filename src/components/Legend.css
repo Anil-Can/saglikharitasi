@@ -33,3 +33,19 @@
     border-radius: 50%;
     border: 1px solid var(--surface-400);
 }
+@media only screen and (max-width: 600px) {
+    .legend-item 
+    {
+        gap: 0.5rem;
+        margin-bottom: 3px;
+    }
+    .legend-item div
+    {
+        width: 0.6rem;
+        height: 0.6rem;
+    }
+    .map-legend{
+        font-size: 0.8rem;
+    }
+    
+}

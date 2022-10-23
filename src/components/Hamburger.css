@@ -9,3 +9,14 @@
     cursor: pointer;
     border-radius: 0.3rem;
 }
+
+@media only screen and (max-width: 600px) {
+    .hamburger {
+        left: 0.7rem;
+        padding: 0.2em 0.3em;
+        border-radius: 0.2em;
+    }
+    .hamburger svg {
+        font-size: 0.8rem;
+    }
+}

@@ -4,6 +4,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import "./Query.css"
 import Select from "./Select";
 export default function Query(){
+    const isMobile = document.body.offsetWidth > 600 ? false : true;
     const { mode, setMode } = useContext(AppContext);
     const category = [
         {
@@ -100,11 +101,11 @@ export default function Query(){
                     <form className="query-menu-form" method="post">
                         <div className="query-selection">
                             <span>Kategori :</span>
-                            <Select options={category} name={"category"} id={"category"} width={"11rem"}/>
+                            <Select options={category} name={"category"} id={"category"} width={ isMobile ? "7.5rem":"11rem"}/>
                         </div>
                         <div className="query-selection">
                             <span>Yıl :</span>
-                            <Select options={years} name={"years"} id={"years"} width={"5rem"}/>
+                            <Select options={years} name={"years"} id={"years"} width={isMobile ? "4rem":"5rem"}/>
                         </div>
 
                         <div className="query-submit">
@@ -128,12 +129,12 @@ export default function Query(){
                     <form className="query-menu-form" method="post">
                         <div className="query-selection">
                             <span>Kategori :</span>
-                            <Select options={category} name={"category"} id={"category"} width={"11rem"}/>
+                            <Select options={category} name={"category"} id={"category"} width={isMobile ? "7.5rem":"11rem"}/>
                         </div>
                         <div className="query-selection">
                             <span>Aralık :</span>
-                            <Select options={years} name={"years"} id={"years"} width={"5rem"} selectChange={selectChange}/>
-                            <Select options={filterYears} name={"years2"} id={"years2"} width={"5rem"}/>
+                            <Select options={years} name={"years"} id={"years"} width={isMobile ? "4rem":"5rem"} selectChange={selectChange}/>
+                            <Select options={filterYears} name={"years2"} id={"years2"} width={isMobile ? "4rem":"5rem"}/>
                         </div>
                         
 

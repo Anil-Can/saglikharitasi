@@ -10,6 +10,7 @@ import Popup from "./Popup";
 
 export default function Map() {
     const {tableName,setIntervals} = useContext(AppContext);
+    const isMobile = document.body.offsetWidth > 600 ? false : true;
     const mapStyle = {
         id: "O_SM",
         version: 8,
@@ -40,8 +41,8 @@ export default function Map() {
     const map = useRef(null);
     const popupRef = useRef(new maplibregl.Popup({closeButton:false,closeOnClick:false}));
     const bounds = [
-        [ 22.84991,  33.921258], // Southwest coordinates
-        [ 46.48194,  47.046743] // Northeast coordinates
+        [ 22.24991,  33.921258], // Southwest coordinates
+        [ 46.48194,  46.046743] // Northeast coordinates
     ];
     const [currentStyle] = useState({version: 8, glyphs: "https://orangemug.github.io/font-glyphs/glyphs/{fontstack}/{range}.pbf",sources: {},layers: []});
     const [center] = useState([34.375,39]);
@@ -136,7 +137,7 @@ export default function Map() {
                     'source': 'komsu',
                     'layout': {},
                     'paint': { 
-                        'fill-color': '#91cf60',
+                        'fill-color': '#eaeaea',
                     }
                 });
                 map.current.addLayer({
@@ -170,7 +171,7 @@ export default function Map() {
                         'text-field': ['get', 'name'],
                         'text-overlap': 'always',
                         'text-font': ['Roboto Medium'],
-                        'text-size': 14
+                        'text-size': isMobile ? 11:14
                     },
                     'paint': {
                         'text-halo-color': 'white',
@@ -185,7 +186,7 @@ export default function Map() {
                         'text-field': ['get', 'name'],
                         'text-overlap': 'always',
                         'text-font': ['Roboto Medium'],
-                        'text-size': 14
+                        'text-size': isMobile ? 11:14
                     },
                     'paint': {
                         'text-halo-color': 'white',

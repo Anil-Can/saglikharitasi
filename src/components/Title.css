@@ -19,3 +19,14 @@
     0.045em 0.045em 0.045em rgba(255, 255, 255, 0.568), 
     0.06em 0.06em 0.06em rgba(255, 255, 255, 0.568);
 }
+
+@media only screen and (max-width: 600px) {
+    .map-title
+    {
+        left: 2.5rem;
+    }
+    .map-title h3 {
+        font-size: 0.8rem;
+        white-space: normal;
+    }
+}
