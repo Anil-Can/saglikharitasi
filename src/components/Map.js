@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useRef, useContext} from "react";
 import ReactDOM from "react-dom";
 import maplibregl from 'maplibre-gl';
-import {provinces_name,komsular,denizler,goller,country_name} from "../data"
+import {provinces_name,komsular,denizler,goller,country_name,saglikKurum} from "../data"
 import { AppContext } from "../context/AppContext";
 import updateGeoJSON from "../functions/updateGeoJSON";
 import classify from "../functions/classify";
@@ -50,6 +50,7 @@ export default function Map() {
 
     useEffect(() => {
         if(map.current) return;
+        console.log(saglikKurum);
         map.current = new maplibregl.Map({
             container: mapContainer.current,
             style:tableName.current.mode === 'cluster' ? mapStyle:currentStyle,
@@ -191,6 +192,24 @@ export default function Map() {
                     'paint': {
                         'text-halo-color': 'white',
                         'text-halo-width': 1.5
+                    }
+                });
+            }
+            else
+            {
+                map.current.addSource('saglik-kurum', {
+                    'type': 'geojson',
+                    'data': saglikKurum
+                });
+                map.current.addLayer({
+                    id: 'layer-saglik',
+                    type: 'circle',
+                    source: 'saglik-kurum',
+                    paint: {
+                        'circle-color': '#11b4da',
+                        'circle-radius': 4,
+                        'circle-stroke-width': 1,
+                        'circle-stroke-color': '#fff'
                     }
                 });
             }

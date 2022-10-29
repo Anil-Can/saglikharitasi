@@ -4,18 +4,10 @@ module.exports = {
     mode: 'production',
     entry: {
         bundle: path.resolve(__dirname,"src/index.js"),
+        const: path.resolve(__dirname,"src/data.js"),
     },
     performance: {
         hints: false,
-    },
-    devServer: {
-        static:{
-            directory: path.resolve(__dirname, "./")
-        },
-        port:3000,
-        open:true,
-        hot:true,
-        compress:true,
     },
     module : {
         rules : [
