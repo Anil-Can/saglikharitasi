@@ -50,7 +50,6 @@ export default function Map() {
 
     useEffect(() => {
         if(map.current) return;
-        console.log(saglikKurum);
         map.current = new maplibregl.Map({
             container: mapContainer.current,
             style:tableName.current.mode === 'cluster' ? mapStyle:currentStyle,

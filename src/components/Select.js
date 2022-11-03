@@ -1,7 +1,15 @@
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
 import "./Select.css"
 import { VscTriangleLeft } from "react-icons/vsc";
-export default function Select({options, name, id, width, selectChange}){
+export default function Select({options, name, id, width, selectChange,logicChanged}){
+    
+    useEffect(()=>{
+        if(logicChanged !== undefined) {
+            let target = document.querySelector('div[data-value=">"]');
+            target.click();
+            target.click();
+        }
+    },[]);
     const [selection,setSelection] = useState(options[0]);
     const toggle = e => {
         let target = e.target.localName !== 'div' ? e.target.parentNode:e.target;
@@ -14,6 +22,7 @@ export default function Select({options, name, id, width, selectChange}){
         beforeElement.children[1].classList.toggle('open');
         beforeElement.nextElementSibling.classList.toggle('active');
         if(selectChange !== undefined) selectChange(parseInt(target.dataset.value));
+        if(logicChanged !== undefined) logicChanged(target.dataset.value);
         setSelection({name:target.children[0].textContent, value:target.dataset.value})
     }
     return (

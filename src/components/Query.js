@@ -5,7 +5,8 @@ import "./Query.css"
 import Select from "./Select";
 export default function Query(){
     const isMobile = document.body.offsetWidth > 600 ? false : true;
-    const { mode, setMode } = useContext(AppContext);
+    const { mode, setMode, intervals,tableName } = useContext(AppContext);
+    
     const category = [
         {
             name: "Hastane Sayıısı",
@@ -25,7 +26,35 @@ export default function Query(){
         },
 
     ]
-    
+    const category2 = [
+        {
+            name: "Kaba Ölüm",
+            value: "Olum"
+        },
+        {
+            name: "Net Göç",
+            value: "goc"
+        },
+        {
+            name: "Gayrisafi Yurtiçi Hasıla",
+            value: "gshy"
+        },
+        {
+            name: "Kişi Başı GSHY",
+            value: "kisi_gshy"
+        },
+        {
+            name: "Ortalama Hane Halkı Büyüklüğü",
+            value: "hane"
+        },
+
+    ]
+    const selectIntervals = intervals.map(e => {
+        return {
+            name: e,
+            value: e.toString()
+        }
+    });
     const selectChange = value => {
         setFilterYears(years2.filter(e => e.name > value));
         
@@ -41,11 +70,47 @@ export default function Query(){
         {name:2009,value:"2009"},{name:2010,value:"2010"},{name:2011,value:"2011"},{name:2012,value:"2012"},{name:2013,value:"2013"},{name:2014,value:"2014"},
         {name:2015,value:"2015"},{name:2016,value:"2016"},{name:2017,value:"2017"},{name:2018,value:"2018"},{name:2019,value:"2019"},
     ]
+    const logic = [
+        {
+            "name": ">",
+            "value": ">",
+        },
+        {
+            "name": "<",
+            "value": "<",
+        }
+    ]
     if(mode === 'compare'){
         category.splice(1,1);
         years.pop();
-    } 
+    }
+    
     const [filterYears ,setFilterYears] = useState(years2);
+    const [filterIntervals,setFilterIntervals] = useState(selectIntervals)
+    const logicChanged = value => {
+        if(value === ">"){
+            let copyselectIntervals = [...selectIntervals];
+            copyselectIntervals.shift();
+            setFilterIntervals(copyselectIntervals);
+            let inputInterval = document.querySelector('#interval');
+            if(inputInterval !== null)
+            {
+                let intervalValue = inputInterval.previousElementSibling.previousElementSibling.textContent;
+                let index = copyselectIntervals.findIndex( e => e.value === intervalValue);
+                if(index === -1)
+                {
+                    let target = document.querySelector(`div[data-value="${copyselectIntervals[0].value}"]`);
+                    target.click();
+                    target.click();
+                }
+            }
+        }
+        else
+        {
+            let copyselectIntervals = [...selectIntervals];
+            setFilterIntervals(copyselectIntervals);
+        }
+    }
     useEffect( ()=> {
         let yearsInput = document.querySelector('#years');
         let years2Input = document.querySelector('#years2');
@@ -68,7 +133,6 @@ export default function Query(){
         document.querySelector('.navbar').querySelector('li.active').classList.remove('active');
     }
     const submit = () => {
-        console.log("Test");
         let categoryInput = document.querySelector('#category')
         let yearsInput = document.querySelector('#years');
         let years2Input = document.querySelector('#years2');
@@ -145,15 +209,35 @@ export default function Query(){
                     </form>
                 </>
             }
-            {mode === 'cross' &&
+            {mode === 'cross' && 
                 <>
                     <div className="query-menu-header">
                         <span>Çapraz Sorgu</span>
                         <VscChromeClose onClick={close}/>
                         </div>
                     <div className="query-menu-info">
-                        <p>Çapraz sorgu 2 farklı katgeoriye baz olarak bir tematik harita oluşturabilirsiniz.Çapraz sorgu yapmanız için normal sorgu yapmak zorundasınız</p>
+                        <p>Bu sorguda normal sorgudan gelen verideki belirlediğiniz aralık ile buradan seçtiğiniz kategori ile bir çapraz sorgu yapmanızı sağlar.Çapraz sorgudaki veriler 2013-2019 yılları arasındadır</p>
                     </div>
+                    {tableName.current.mode === 'statistic' && parseInt(tableName.current.years) > 2012 &&
+                        <form className="query-menu-form" method="post">
+                            <div className="query-selection">
+                                <span>Kategori :</span>
+                                <Select options={category2} name={"category2"} id={"category2"} width={ isMobile ? "7.5rem":"11rem"}/>
+                            </div>
+                            <div className="query-selection">
+                                <span>Aralık :</span>
+                                <Select options={logic} name={"logic"} id={"logic"} width={ isMobile ? "1rem":"2rem"} logicChanged={logicChanged}/>
+                                {filterIntervals.length > 0 && 
+                                    <Select options={filterIntervals} name={"interval"} id={"interval"} width={ isMobile ? "3.5rem":"5.5rem"}/>
+                                }
+                            </div>
+                            <input style={{display:"none"}} value={`${tableName.current.category}-${tableName.current.years}`}/>
+                            <div className="query-submit">
+                                <input type="submit" value="Haritayı Aç" onClick={submit}/>
+                            </div>
+                            
+                        </form>
+                    }
                 </>
             }
         </div>
