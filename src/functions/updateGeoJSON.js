@@ -75,6 +75,18 @@ export default function updateGeoJSON(current){
             }
             break;
         case 'cross':
+            updatedGeoJSON.features = updatedGeoJSON.features.map(e => {
+                if(e.properties.compute !== undefined)
+                {
+                    e.properties.compute = parseFloat(e.properties.compute);
+                }
+                else
+                {
+                    e.properties.compute = -1.0;
+                }
+                
+                return e;
+            })
             break;
     }
     return updatedGeoJSON;

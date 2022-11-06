@@ -9,7 +9,27 @@
     $conn = mysqli_connect('localhost','root','','bap');
     if(isset($_POST['category2'])) // Çapraz Sorgu yapıldıysa
     {
-        echo $_POST['category2'];
+        // Normal sorgudan gelen kategori ve yıl sorgudan alınır
+        $inputData = explode("-", $_POST['category']);
+        $firstCategory = $inputData[0];
+        $year = $inputData[1];
+
+        // Tablolar getirlidi
+        $table1 = $firstCategory."_".$year;
+        $table2 = $_POST['category2']."_".$year;
+        $nufus = "nufus_".$year;
+
+        // Where koşulu
+        $number = floatval($_POST['interval']);
+
+        $sql = "SELECT {$table1}.*,{$nufus}.nufus,{$table2}.oran AS compute
+        FROM {$table1} 
+        INNER JOIN {$nufus} ON {$nufus}.il = {$table1}.il 
+        INNER JOIN {$table2} ON {$table2}.il = {$nufus}.il 
+        WHERE {$nufus}.nufus/{$table1}.hekim {$_POST['logic']}{$number};";
+        $result = mysqli_query($conn,$sql);
+        $properties = mysqli_fetch_all($result,MYSQLI_ASSOC);
+        $data = json_encode($properties);
     }
     else
     {

@@ -134,10 +134,15 @@ export default function Query(){
     }
     const submit = () => {
         let categoryInput = document.querySelector('#category')
+        let categoryInput2 = document.querySelector('#category2')
         let yearsInput = document.querySelector('#years');
         let years2Input = document.querySelector('#years2');
         sessionStorage.setItem("mode",mode);
-        if( years2Input !== null)
+        if(categoryInput2 !== null)
+        {
+            sessionStorage.setItem("category2",categoryInput2.value);
+        }
+        else if( years2Input !== null)
         {
             sessionStorage.setItem("years2",years2Input.value);
             sessionStorage.setItem("years",yearsInput.value);
@@ -231,7 +236,7 @@ export default function Query(){
                                     <Select options={filterIntervals} name={"interval"} id={"interval"} width={ isMobile ? "3.5rem":"5.5rem"}/>
                                 }
                             </div>
-                            <input style={{display:"none"}} value={`${tableName.current.category}-${tableName.current.years}`}/>
+                            <input style={{display:"none"}} name="category" value={`${tableName.current.category}-${tableName.current.years}`}/>
                             <div className="query-submit">
                                 <input type="submit" value="Haritayı Aç" onClick={submit}/>
                             </div>

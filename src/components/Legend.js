@@ -12,6 +12,7 @@ export default function Legend (){
         "#fecc5c",
         "#ffffb2",
     ];
+    if(tableName.current.mode === 'cross') colorList.push('black');
     return(
         <div className="map-legend">
             <div className="map-legend-header">
@@ -28,6 +29,12 @@ export default function Legend (){
                         </div>
                     )
                 })}
+                {tableName.current.mode === 'cross' && 
+                    <div className="legend-item">
+                        <div style={{backgroundColor:colorList[5]}}></div>
+                        <span>Aralık Dışı</span>
+                    </div>
+                }
             </div>
         </div>
     )

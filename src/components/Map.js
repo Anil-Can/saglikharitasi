@@ -67,9 +67,7 @@ export default function Map() {
                 let provinceGeoJSON = updateGeoJSON(tableName.current);
                 const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
                 setIntervals([maxValue,...intervalsLocal]);
-                let colors = setLayerPorperty(intervalsLocal);
-                
-
+                let colors = setLayerPorperty(intervalsLocal,tableName.current.mode);
                 map.current.addSource('provinces_name', {
                     'type': 'geojson',
                     'data': provinces_name
