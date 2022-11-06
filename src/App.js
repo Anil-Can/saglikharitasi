@@ -9,7 +9,7 @@ import Title from "./components/Title";
 import { AppContext } from "./context/AppContext"
 
 export default function App() {
-    // Kategori isimleri yıl ve sorgu tipini çerez olarak getirilir
+    // Kategori isimleri yıl ve sorgu tipini çerez olarak getirilirsss
     if(sessionStorage.getItem("category") === null) sessionStorage.setItem("category","hastanesayisi");
     if(sessionStorage.getItem("category2") === null) sessionStorage.setItem("category2","olum");
     if(sessionStorage.getItem("years") === null) sessionStorage.setItem("years","2002");

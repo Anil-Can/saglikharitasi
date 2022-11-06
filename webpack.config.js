@@ -5,7 +5,6 @@ module.exports = {
     mode: 'production',
     entry: {
         bundle: path.resolve(__dirname,"src/index.js"),
-        const: path.resolve(__dirname,"src/data.js"),
     },
     performance: {
         hints: false,
