@@ -14,7 +14,11 @@
         $firstCategory = $inputData[0];
         $year = $inputData[1];
 
-        // Tablolar getirlidi
+        $field = $firstCategory === 'saglik_personel' ? 'hekim':'toplam';
+        $compute = $_POST['category2'] === 'olum' ? 'oran': 'value';
+        console_log($field);
+        console_log($compute);
+        // Tablo isimleri getirilidi
         $table1 = $firstCategory."_".$year;
         $table2 = $_POST['category2']."_".$year;
         $nufus = "nufus_".$year;
@@ -22,11 +26,11 @@
         // Where koşulu
         $number = floatval($_POST['interval']);
 
-        $sql = "SELECT {$table1}.*,{$nufus}.nufus,{$table2}.oran AS compute
+        $sql = "SELECT {$table1}.*,{$nufus}.nufus,{$table2}.{$compute} AS compute
         FROM {$table1} 
         INNER JOIN {$nufus} ON {$nufus}.il = {$table1}.il 
         INNER JOIN {$table2} ON {$table2}.il = {$nufus}.il 
-        WHERE {$nufus}.nufus/{$table1}.hekim {$_POST['logic']}{$number};";
+        WHERE {$nufus}.nufus/{$table1}.{$field} {$_POST['logic']}{$number};";
         $result = mysqli_query($conn,$sql);
         $properties = mysqli_fetch_all($result,MYSQLI_ASSOC);
         $data = json_encode($properties);

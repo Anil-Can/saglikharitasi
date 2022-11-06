@@ -29,12 +29,13 @@ export default function Query(){
     const category2 = [
         {
             name: "Kaba Ölüm",
-            value: "Olum"
+            value: "olum"
         },
+        /*
         {
             name: "Net Göç",
             value: "goc"
-        },
+        },*/
         {
             name: "Gayrisafi Yurtiçi Hasıla",
             value: "gshy"

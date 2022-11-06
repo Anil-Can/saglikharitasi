@@ -1,10 +1,10 @@
-import React,{ useContext } from "react";
+import React,{ useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import "./Legend.css";
 
 export default function Legend (){
     const {tableName,intervals} = useContext(AppContext);
-
+    const [legendTitle,setLegendTitle] = useState("")
     const colorList = [
         "#bd0026",
         "#f03b20",
@@ -13,10 +13,34 @@ export default function Legend (){
         "#ffffb2",
     ];
     if(tableName.current.mode === 'cross') colorList.push('black');
+    useEffect(()=>{
+        if(tableName.current.mode === 'cross')
+        {
+            switch(tableName.current.category2)
+            {
+                case 'olum':
+                    setLegendTitle('Kaba Ölüm Oranı');
+                    break;
+                case 'gshy':
+                    setLegendTitle('Gayrisafi Yurtiçi Hasıla');
+                    break;
+                case 'kisi_gshy':
+                    setLegendTitle('Kişi Başı GSHY');
+                    break;
+                case 'hane':
+                    setLegendTitle('Ortalama Hane Halkı Büyüklüğü');
+                    break;
+            }
+        }
+        else
+        {
+            setLegendTitle(tableName.current.category !== 'anne_yas' ? "Kişi Sayısı":"Yaş Oranı");
+        }
+    },[intervals])
     return(
         <div className="map-legend">
             <div className="map-legend-header">
-                <span>{tableName.current.category !== 'anne_yas' ? "Kişi Sayısı":"Yaş Oranı"}</span>
+                <span>{legendTitle}</span>
             </div>
             <div className="map-legend-body">
                 {intervals.map((e,i)=>{

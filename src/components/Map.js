@@ -196,15 +196,66 @@ export default function Map() {
             {
                 map.current.addSource('saglik-kurum', {
                     'type': 'geojson',
-                    'data': saglikKurum
+                    'data': saglikKurum,
+                    cluster: true,
+                    clusterMaxZoom: 22,
+                    clusterRadius: 20
+                });
+                map.current.addLayer({
+                    'id': 'clusters-saglik-kurum',
+                    'type': 'circle',
+                    'source': 'saglik-kurum',
+                    'filter': ['has', 'point_count'],
+                    'paint': {
+                        'circle-color': [
+                            'step',
+                            ['get', 'point_count'],
+                            '#2b83ba',
+                            1000,
+                            '#abdda4',
+                            2000,
+                            '#ffffbf',
+                            3000,
+                            '#fdae61',
+                            4000,
+                            '#d7191c'
+                        ],
+                        
+                        'circle-radius': [
+                            'step',
+                            ['get', 'point_count'],
+                            15,
+                            1000,
+                            20,
+                            2000,
+                            25,
+                            3000,
+                            30,
+                            4000,
+                            35
+                            ]
+                    }
+    
+                });
+                map.current.addLayer({
+                    'id': 'clusters-count-saglik-kurum',
+                    'type': 'symbol',
+                    'source': 'saglik-kurum',
+                    'filter': ['has', 'point_count'],
+                    'layout': {
+                        'text-field': '{point_count_abbreviated}',
+                        'text-font': ['Roboto Medium'],
+                        'text-size': 12
+                    }
                 });
                 map.current.addLayer({
                     id: 'layer-saglik',
                     type: 'circle',
                     source: 'saglik-kurum',
+                    filter: ['!', ['has', 'point_count']],
                     paint: {
                         'circle-color': '#11b4da',
-                        'circle-radius': 4,
+                        'circle-radius': 7,
                         'circle-stroke-width': 1,
                         'circle-stroke-color': '#fff'
                     }
@@ -213,6 +264,24 @@ export default function Map() {
             
         });
         map.current.on('click', 'il_layer', e => {
+            if(e.features.length > 0)
+            {
+                let popupHeader = document.querySelector('.map-popup-header');
+                if( popupHeader !== null) popupHeader.querySelector('button').click();
+                let properties = e.features[0].properties;
+                const popupNode = document.createElement("div");
+                popupRef.current
+                .setLngLat(e.lngLat)
+                .setDOMContent(popupNode)
+                .addTo(map.current)
+                ReactDOM.render(
+                    <Popup properties={properties} tableName={tableName.current} popup={popupRef.current}/>,
+                    popupNode
+                );
+                
+            }
+        });
+        map.current.on('click', 'layer-saglik', e => {
             if(e.features.length > 0)
             {
                 let popupHeader = document.querySelector('.map-popup-header');
@@ -250,6 +319,13 @@ export default function Map() {
         });
             
         map.current.on('mouseleave', 'il_layer', function () {
+            map.current.getCanvas().style.cursor = 'default';
+        });
+        map.current.on('mouseenter', 'layer-saglik', function () {
+            map.current.getCanvas().style.cursor = 'pointer';
+        });
+            
+        map.current.on('mouseleave', 'layer-saglik', function () {
             map.current.getCanvas().style.cursor = 'default';
         });
     

@@ -181,7 +181,24 @@ const getContent = (properties,tableName) => {
                     )
             }
             break;
-        case 'cross':
+        case 'cluster':
+            const {KATEGORI_U,KATEGORI_A,USTKATEGOR} = properties;
+            return(
+                <>
+                    <div className="map-popup-attribute">
+                        <span>KATEGORI_U</span>
+                        <span>{KATEGORI_U}</span>
+                    </div>
+                    <div className="map-popup-attribute">
+                        <span>KATEGORI_A</span>
+                        <span>{KATEGORI_A}</span>
+                    </div>
+                    <div className="map-popup-attribute">
+                        <span>USTKATEGOR</span>
+                        <span>{USTKATEGOR}</span>
+                    </div>
+                </>
+            )
     }
 }
 export default function Popup({properties,tableName,popup})
@@ -189,11 +206,10 @@ export default function Popup({properties,tableName,popup})
     const close = () => {
         popup.remove();
     }
-    const {IL_Adi} = properties;
     return (
         <div className="map-popup">
             <div className="map-popup-header">
-                <span>{IL_Adi}</span>
+                <span>{tableName.mode !== 'cluster' ? `${properties.IL_Adi}`:`${properties.ADI}`}</span>
                 <button onClick={close}>X</button>
             </div>
             <div className="map-popup-body">
