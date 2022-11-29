@@ -68,6 +68,7 @@ export default function Map() {
                 const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
                 setIntervals([maxValue,...intervalsLocal]);
                 let colors = setLayerPorperty(intervalsLocal,tableName.current.mode);
+                console.log(tableName.current.mode);
                 map.current.addSource('provinces_name', {
                     'type': 'geojson',
                     'data': provinces_name
@@ -109,6 +110,7 @@ export default function Map() {
                         ]
                     }
                 });
+
                 map.current.addLayer({
                     'id': 'il_sinir_layer',
                     'type': 'line',
@@ -116,13 +118,16 @@ export default function Map() {
                     'layout': {},
                     'paint': 
                     {
-                        'line-color': [
+                        'line-color': tableName.current.mode !== 'cross' ? 'rgba(0,0,0,1.0)':
+                        [
                             'case',
                             ['boolean', ['get', 'highlight'], true],
                             '#c014f5',
-                            '#121112'
-                        ],
-                        'line-width': [
+                            'black'
+                        ]
+                        ,
+                        'line-width': tableName.current.mode !== 'cross' ? 1:
+                        [
                             'case',
                             ['boolean', ['get', 'highlight'], true],
                             3,
@@ -130,6 +135,9 @@ export default function Map() {
                         ]
                     }
                 });
+                
+                
+                
                 map.current.addLayer({
                     'id': 'deniz_layer',
                     'type': 'fill',

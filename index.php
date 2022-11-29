@@ -117,7 +117,6 @@
     <div id="root"></div>
     <script>
         var queryResult = JSON.parse('<?= $data; ?>');
-        console.log(queryResult);
     </script>
     <script src="bundle.js"></script>
 </body>
