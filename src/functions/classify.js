@@ -1,5 +1,3 @@
-import { GiTable } from "react-icons/gi";
-
 const intervals = (initial,interval,arr,total) => {
     let stop = false;
     let value = initial - interval;
@@ -22,13 +20,10 @@ const intervals = (initial,interval,arr,total) => {
 
 export default function classify(geojson,current){
     
-    let computeFields = current.mode !== 'cross' ?
-    geojson.features.map(e => e.properties.compute)
-    :geojson.features.filter(e => e.properties.compute !== -1.0).map(e => e.properties.compute);
-
+    let computeFields = geojson.features.map(e => e.properties.compute)
     let maxValue = Math.max(...computeFields);
     let totalCount = 0;
-    let total = current.mode !== 'cross' ? 16 : Math.floor(computeFields.length/5);
+    let total = 16;
     const [ value, count ] = intervals(maxValue,0.1,computeFields,total);
     totalCount += count;
     let values = [value];

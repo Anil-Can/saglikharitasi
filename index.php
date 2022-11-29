@@ -5,7 +5,6 @@
         echo '</script>';
     }
     $type = "";
-    //session_start();
     $conn = mysqli_connect('localhost','root','','bap');
     if(isset($_POST['category2'])) // Çapraz Sorgu yapıldıysa
     {
@@ -16,8 +15,6 @@
 
         $field = $firstCategory === 'saglik_personel' ? 'hekim':'toplam';
         $compute = $_POST['category2'] === 'olum' ? 'oran': 'value';
-        console_log($field);
-        console_log($compute);
         // Tablo isimleri getirilidi
         $table1 = $firstCategory."_".$year;
         $table2 = $_POST['category2']."_".$year;
@@ -26,13 +23,23 @@
         // Where koşulu
         $number = floatval($_POST['interval']);
 
-        $sql = "SELECT {$table1}.*,{$nufus}.nufus,{$table2}.{$compute} AS compute
+        $sql =  "SELECT {$nufus}.*,{$table2}.{$compute} AS compute FROM {$table2} INNER JOIN {$nufus} ON {$table2}.il = {$nufus}.il";
+        $sql_filter = "SELECT {$table1}.il
         FROM {$table1} 
         INNER JOIN {$nufus} ON {$nufus}.il = {$table1}.il 
-        INNER JOIN {$table2} ON {$table2}.il = {$nufus}.il 
         WHERE {$nufus}.nufus/{$table1}.{$field} {$_POST['logic']}{$number};";
         $result = mysqli_query($conn,$sql);
         $properties = mysqli_fetch_all($result,MYSQLI_ASSOC);
+        $result_filter = mysqli_query($conn,$sql_filter);
+        $properties_filter = mysqli_fetch_all($result_filter,MYSQLI_ASSOC);
+        function highlight($property)
+        {
+            global $properties_filter;
+            $index = array_search($property['il'],array_column($properties_filter, 'il'));
+            $property['highlight'] = $index ? true:false;
+            return $property;
+        }
+        $properties = array_map('highlight',$properties);
         $data = json_encode($properties);
     }
     else
@@ -53,7 +60,6 @@
 
             $result2 = mysqli_query($conn,$sql2);
             $properties2 = mysqli_fetch_all($result2,MYSQLI_ASSOC);
-            global $asd;
             $keys = array_keys($properties1[0]);
             array_shift($keys);
             function combine($first,$second)
@@ -111,6 +117,7 @@
     <div id="root"></div>
     <script>
         var queryResult = JSON.parse('<?= $data; ?>');
+        console.log(queryResult);
     </script>
     <script src="bundle.js"></script>
 </body>

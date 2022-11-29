@@ -116,8 +116,18 @@ export default function Map() {
                     'layout': {},
                     'paint': 
                     {
-                        'line-color': 'rgba(0,0,0,1.0)',
-                        'line-width': 1
+                        'line-color': [
+                            'case',
+                            ['boolean', ['get', 'highlight'], true],
+                            '#c014f5',
+                            '#121112'
+                        ],
+                        'line-width': [
+                            'case',
+                            ['boolean', ['get', 'highlight'], true],
+                            3,
+                            1
+                        ]
                     }
                 });
                 map.current.addLayer({

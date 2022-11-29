@@ -7,11 +7,6 @@ export default function setLayerPorperty(intervals,mode){
         "#fecc5c",
         "#ffffb2",
     ];
-    if(mode === 'cross')
-    {
-        fillColor.push(['==',['get','compute'], -1.0]);
-        fillColor.push("black");
-    }
     intervals.forEach((e,j) => {
         fillColor.push(['>',['get','compute'], e]);
         fillColor.push(colorList[j])
