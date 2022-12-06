@@ -53,6 +53,15 @@ export default function Legend (){
                     )
                 })}
             </div>
+            {tableName.current.interval.length > 1 &&
+                <div className="legend-extra-info">
+                    <div>
+                        <div></div>
+                        <span>{tableName.current.interval.split("|")[0]}</span>
+                    </div>
+                    <span>{tableName.current.interval.split("|")[1]}</span>
+                </div>
+            } 
         </div>
     )
 }

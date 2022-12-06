@@ -6,7 +6,7 @@ import Select from "./Select";
 export default function Query(){
     const isMobile = document.body.offsetWidth > 600 ? false : true;
     const { mode, setMode, intervals,tableName } = useContext(AppContext);
-    
+    console.log(tableName.current)
     const category = [
         {
             name: "Hastane Sayıısı",
@@ -138,21 +138,31 @@ export default function Query(){
         let categoryInput2 = document.querySelector('#category2')
         let yearsInput = document.querySelector('#years');
         let years2Input = document.querySelector('#years2');
+        let logicInput = document.querySelector("#logic");
+        let intervalInput = document.querySelector("#interval");
         sessionStorage.setItem("mode",mode);
         if(categoryInput2 !== null)
         {
+  
+            let title= tableName.current.category === 'hastanesayisi' ? "Hastane Başına Düşen Kişi Sayısı":
+            tableName.current.category === 'saglik_personel' ? "Hekim Başına Düşen Kişi Sayısı":
+            "Hastane Yatak Başına Düşen Kişi Sayısı";
+
             sessionStorage.setItem("category2",categoryInput2.value);
+            sessionStorage.setItem("interval",`${title}|${logicInput.value} ${intervalInput.value}`);
         }
         else if( years2Input !== null)
         {
             sessionStorage.setItem("years2",years2Input.value);
             sessionStorage.setItem("years",yearsInput.value);
             sessionStorage.setItem("category",categoryInput.value);
+            sessionStorage.setItem("interval","");
         }
         else
         {
             sessionStorage.setItem("years",yearsInput.value);
             sessionStorage.setItem("category",categoryInput.value);
+            sessionStorage.setItem("interval","");
         }
     }
     return(

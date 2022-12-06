@@ -15,6 +15,7 @@ export default function App() {
     if(sessionStorage.getItem("years") === null) sessionStorage.setItem("years","2002");
     if(sessionStorage.getItem("years2") === null) sessionStorage.setItem("years2","2003");
     if(sessionStorage.getItem("mode") === null) sessionStorage.setItem("mode","statistic");
+    if(sessionStorage.getItem("interval") === null) sessionStorage.setItem("interval","");
     const [mode, setMode] = useState(null);
     const [intervals,setIntervals] = useState([]);
     const tableName = useRef({
@@ -22,7 +23,8 @@ export default function App() {
         category2:sessionStorage.getItem("category2"),
         years: sessionStorage.getItem("years"),
         years2:sessionStorage.getItem("years2"),
-        mode:sessionStorage.getItem("mode")
+        mode:sessionStorage.getItem("mode"),
+        interval:sessionStorage.getItem("interval"),
     })
     return(
         <React.StrictMode>
