@@ -10,16 +10,16 @@ export default function Title () {
         {
             case 'statistic':
                 text = tableName.current.category === 'hastanesayisi' ? 
-                `${tableName.current.years} Yılına Ait Hastane Başına Düşen Kişi Sayısı`: 
-                tableName.current.category === 'saglik_personel' ? `${tableName.current.years} Yılına Ait Hekim Başına Düşen Kişi Sayısı`:
-                text = tableName.current.category === 'hastane_yatak_sayisi' ? `${tableName.current.years} Yılına Ait Hastane Yatak Başına Düşen Kişi Sayısı`:
-                `${tableName.current.years} Yılına Ait Anne Olma Yaş Oranı`
+                `Hastane Başına Düşen Kişi Sayısı (${tableName.current.years})`: 
+                tableName.current.category === 'saglik_personel' ? `Hekim Başına Düşen Kişi Sayısı (${tableName.current.years})`:
+                text = tableName.current.category === 'hastane_yatak_sayisi' ? `Hastane Yatak Başına Düşen Kişi Sayısı (${tableName.current.years})`:
+                `Anne Olma Yaş Oranı (${tableName.current.years})`
                 break;
             case 'compare':
                 text = tableName.current.category === 'hastanesayisi' ? 
-                `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hastane Başına Düşen Kişi Sayısının Değşimi`: 
-                tableName.current.category === 'saglik_personel' ? `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hekim Başına Düşen Kişi Sayısının Değşimi`:
-                `${tableName.current.years} - ${tableName.current.years2 } Yılları Arasındaki Ait Hastane Yatak Başına Düşen Kişi Sayısının Değşimi`
+                `Yılları Arasındaki Ait Hastane Başına Düşen Kişi Sayısının Değşimi (${tableName.current.years} - ${tableName.current.years2 })`: 
+                tableName.current.category === 'saglik_personel' ? `Yılları Arasındaki Ait Hekim Başına Düşen Kişi Sayısının Değşimi (${tableName.current.years} - ${tableName.current.years2 })`:
+                `Yılları Arasındaki Ait Hastane Yatak Başına Düşen Kişi Sayısının Değşimi (${tableName.current.years} - ${tableName.current.years2 })`
                 break;
             case 'cross':
         }
