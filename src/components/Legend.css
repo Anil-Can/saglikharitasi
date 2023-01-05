@@ -12,7 +12,8 @@
     padding: 0.4em 0.6em;
     color: var(--primary-color-text);
     border-bottom: 1px solid var(--surface-300);
-    max-width: 160px;
+    min-width: 160px;
+    max-width: 200px;
 }
 .map-legend-header {
     font-weight: bold;

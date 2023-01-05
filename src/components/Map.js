@@ -68,7 +68,6 @@ export default function Map() {
                 const [intervalsLocal,maxValue] = classify(provinceGeoJSON,tableName.current);
                 setIntervals([maxValue,...intervalsLocal]);
                 let colors = setLayerPorperty(intervalsLocal,tableName.current.mode);
-                console.log(tableName.current.mode);
                 map.current.addSource('provinces_name', {
                     'type': 'geojson',
                     'data': provinces_name
@@ -217,7 +216,7 @@ export default function Map() {
                     'data': saglikKurum,
                     cluster: true,
                     clusterMaxZoom: 22,
-                    clusterRadius: 20
+                    clusterRadius: 30
                 });
                 map.current.addLayer({
                     'id': 'clusters-saglik-kurum',
@@ -228,29 +227,37 @@ export default function Map() {
                         'circle-color': [
                             'step',
                             ['get', 'point_count'],
-                            '#2b83ba',
+                            '#377eb8',
+                            200,
+                            '#4daf4a',
+                            400,
+                            '#ffff33',
+                            600,
+                            '#ff7f00',
+                            800,
+                            '#984ea3',
                             1000,
-                            '#abdda4',
-                            2000,
-                            '#ffffbf',
-                            3000,
-                            '#fdae61',
-                            4000,
-                            '#d7191c'
+                            '#4daf4a',
+                            1200,
+                            '#e41a1c'
                         ],
                         
                         'circle-radius': [
                             'step',
                             ['get', 'point_count'],
                             15,
+                            200,
+                            18,
+                            400,
+                            21,
+                            600,
+                            24,
+                            800,
+                            27,
                             1000,
-                            20,
-                            2000,
-                            25,
-                            3000,
                             30,
-                            4000,
-                            35
+                            1200,
+                            33,
                             ]
                     }
     
@@ -273,7 +280,7 @@ export default function Map() {
                     filter: ['!', ['has', 'point_count']],
                     paint: {
                         'circle-color': '#11b4da',
-                        'circle-radius': 7,
+                        'circle-radius': 4,
                         'circle-stroke-width': 1,
                         'circle-stroke-color': '#fff'
                     }

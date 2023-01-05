@@ -22,6 +22,12 @@ export default function Title () {
                 `Yılları Arasındaki Ait Hastane Yatak Başına Düşen Kişi Sayısının Değşimi (${tableName.current.years} - ${tableName.current.years2 })`
                 break;
             case 'cross':
+                text = tableName.current.category2 === 'olum' ? 
+                `Kaba Ölüm Oranı (${tableName.current.years})`: 
+                tableName.current.category2 === 'gshy' ? `Gayrisafi Yurtiçi Hasıla (${tableName.current.years})`:
+                text = tableName.current.category2 === 'kisi_gshy' ? `Kişi Başı GSHY (${tableName.current.years})`:
+                `Ortalama Hane Halkı Büyüklüğü (${tableName.current.years})`
+                break;
         }
         return text;
     }

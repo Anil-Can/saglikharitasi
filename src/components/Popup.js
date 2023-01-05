@@ -181,6 +181,20 @@ const getContent = (properties,tableName) => {
                     )
             }
             break;
+        case 'cross':
+            const {compute,nufus} = properties;
+            return (
+                <>
+                    <div className="map-popup-attribute">
+                        <span>Nüfus</span>
+                        <span>{nufus}</span>
+                    </div>
+                    <div className="map-popup-attribute">
+                        <span>Oran</span>
+                        <span>{compute}</span>
+                    </div>
+                </>
+            )
         case 'cluster':
             const {KATEGORI_U,KATEGORI_A,USTKATEGOR} = properties;
             return(

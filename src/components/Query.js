@@ -6,7 +6,6 @@ import Select from "./Select";
 export default function Query(){
     const isMobile = document.body.offsetWidth > 600 ? false : true;
     const { mode, setMode, intervals,tableName } = useContext(AppContext);
-    console.log(tableName.current)
     const category = [
         {
             name: "Hastane Sayıısı",
