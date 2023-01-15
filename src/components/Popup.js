@@ -196,20 +196,20 @@ const getContent = (properties,tableName) => {
                 </>
             )
         case 'cluster':
-            const {KATEGORI_U,KATEGORI_A,USTKATEGOR} = properties;
+            const {KATEGORI_U,KATEGORI_A,HIZMET_KAD} = properties;
             return(
                 <>
                     <div className="map-popup-attribute">
-                        <span>KATEGORI_U</span>
-                        <span>{KATEGORI_U}</span>
+                        <span style={{width:"100px"}}>Üst Kategori</span>
+                        <span style={{width:"200px"}}>{KATEGORI_U}</span>
                     </div>
                     <div className="map-popup-attribute">
-                        <span>KATEGORI_A</span>
-                        <span>{KATEGORI_A}</span>
+                        <span style={{width:"100px"}}>Alt Kategori</span>
+                        <span style={{width:"200px"}}>{KATEGORI_A}</span>
                     </div>
                     <div className="map-popup-attribute">
-                        <span>USTKATEGOR</span>
-                        <span>{USTKATEGOR}</span>
+                        <span style={{width:"100px"}}>Kademesi</span>
+                        <span style={{width:"200px"}}>{HIZMET_KAD}</span>
                     </div>
                 </>
             )
